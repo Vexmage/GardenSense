@@ -1,5 +1,123 @@
-﻿<h3>Zones</h3>
+﻿@page "/zones"
+@inject GardenContext Db
+@using GardenSense.Data
+@using GardenSense.Models
+@using Microsoft.EntityFrameworkCore
+
+
+<h3>Garden Zones</h3>
+
+<hr />
+
+<!-- List existing zones -->
+@if (zones == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var zone in zones)
+            {
+                <tr>
+                    <td>@zone.Name</td>
+                    <td>@zone.Location</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" @onclick="@(() => EditZone(zone))">Edit</button>
+                        <button class="btn btn-sm btn-danger" @onclick="@(() => DeleteZone(zone.Id))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<hr />
+
+<h4>@(isEditing ? "Edit Zone" : "Add Zone")</h4>
+
+<EditForm Model="zoneForm" OnValidSubmit="SaveZone">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-3">
+        <label>Name:</label>
+        <InputText class="form-control" @bind-value="zoneForm.Name" />
+    </div>
+    <div class="mb-3">
+        <label>Location:</label>
+        <InputText class="form-control" @bind-value="zoneForm.Location" />
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    @if (isEditing)
+    {
+        <button class="btn btn-secondary ms-2" @onclick="CancelEdit">Cancel</button>
+    }
+</EditForm>
 
 @code {
+    private List<GardenZone>? zones;
+    private GardenZone zoneForm = new();
+    private bool isEditing = false;
 
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadZones();
+    }
+
+    private async Task LoadZones()
+    {
+        zones = await Db.Zones.OrderBy(z => z.Name).ToListAsync();
+    }
+
+    private void EditZone(GardenZone zone)
+    {
+        zoneForm = new GardenZone
+            {
+                Id = zone.Id,
+                Name = zone.Name,
+                Location = zone.Location
+            };
+        isEditing = true;
+    }
+
+    private void CancelEdit()
+    {
+        isEditing = false;
+        zoneForm = new GardenZone();
+    }
+
+    private async Task SaveZone()
+    {
+        if (zoneForm.Id == 0)
+        {
+            Db.Zones.Add(zoneForm);
+        }
+        else
+        {
+            Db.Zones.Update(zoneForm);
+        }
+
+        await Db.SaveChangesAsync();
+        await LoadZones();
+        CancelEdit();
+    }
+
+    private async Task DeleteZone(int id)
+    {
+        var zone = await Db.Zones.FindAsync(id);
+        if (zone != null)
+        {
+            Db.Zones.Remove(zone);
+            await Db.SaveChangesAsync();
+            await LoadZones();
+        }
+    }
 }

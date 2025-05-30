@@ -1,5 +1,25 @@
-﻿<h3>Simulate</h3>
+﻿@page "/simulate"
+@using GardenSense.Services
+@inject SimulationService SimService
+
+
+<h3>Simulate Sensor Readings</h3>
+
+<p>This will generate a new reading for each garden zone using simulated data.</p>
+
+<button class="btn btn-primary" @onclick="RunSimulation">Generate Simulated Data</button>
+
+@if (message != null)
+{
+    <p class="mt-3 alert alert-success">@message</p>
+}
 
 @code {
+    private string? message;
 
+    private async Task RunSimulation()
+    {
+        await SimService.GenerateSensorDataAsync();
+        message = $"Sensor data generated at {DateTime.Now:T}";
+    }
 }
