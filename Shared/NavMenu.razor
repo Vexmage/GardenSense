@@ -26,12 +26,20 @@
             </NavLink>
         </div>
 
-        <NavLink href="zones" class="nav-link" Match="NavLinkMatch.All">
-            <span class="oi oi-map" aria-hidden="true"></span> Zones
-        </NavLink>
+        <div class="nav-item px-3">
+            <NavLink href="zones" class="nav-link" Match="NavLinkMatch.All">
+                <span class="oi oi-map" aria-hidden="true"></span> Zones
+            </NavLink>
+        </div>
 
+        <div class="nav-item px-3">
+            <NavLink href="history" class="nav-link" Match="NavLinkMatch.All">
+                <span class="oi oi-graph" aria-hidden="true"></span> History
+            </NavLink>
+        </div>
     </nav>
 </div>
+
 
 @code {
     private bool collapseNavMenu = true;
