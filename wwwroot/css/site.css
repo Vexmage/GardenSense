@@ -66,3 +66,55 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+
+
+/* Branding Colors */
+:root {
+    --brand-green: #4caf50;
+    --brand-lightgreen: #e8f5e9;
+    --brand-darkgreen: #2e7d32;
+    --brand-accent: #8bc34a;
+}
+
+/* Hero section styling */
+.hero {
+    background: var(--brand-lightgreen);
+    border-left: 5px solid var(--brand-green);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+    .hero h1 {
+        color: var(--brand-darkgreen);
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .hero p.lead {
+        color: #444;
+        font-size: 1.25rem;
+    }
+
+    .hero .btn {
+        margin: 0.5rem;
+    }
+
+/* Feature card titles */
+.card-title {
+    color: var(--brand-darkgreen);
+    font-weight: bold;
+}
+
+/* Custom button tweaks */
+.btn-outline-success {
+    border-color: var(--brand-green);
+    color: var(--brand-green);
+}
+
+    .btn-outline-success:hover {
+        background-color: var(--brand-green);
+        color: white;
+    }

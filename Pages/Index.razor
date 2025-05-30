@@ -1,7 +1,66 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>GardenSense</PageTitle>
 
-<h1>Hello, world!</h1>
+<!-- 🌿 Hero Section -->
+<div class="hero shadow-sm">
+    <h1>🌿 GardenSense</h1>
+    <p class="lead">Smart garden monitoring — simulated today, Raspberry Pi tomorrow.</p>
+    <p>
+        <a href="zones" class="btn btn-primary btn-lg me-2">Manage Zones</a>
+        <a href="simulate" class="btn btn-outline-success btn-lg">Simulate Data</a>
+    </p>
+</div>
 
-Welcome to your new app.
+
+<!-- 🧭 Feature Cards -->
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">📍 Garden Zones</h5>
+                <p class="card-text">
+                    Define areas of your garden or greenhouse. Each zone can be monitored separately with sensor data and controls.
+                </p>
+                <a href="zones" class="btn btn-sm btn-outline-primary">Go to Zones</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">🧪 Simulated Sensor Data</h5>
+                <p class="card-text">
+                    Use simulated temperature, humidity, light, and soil moisture data to test your dashboard without hardware.
+                </p>
+                <a href="simulate" class="btn btn-sm btn-outline-success">Run Simulation</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Future features (optional placeholders) -->
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">📈 Sensor History</h5>
+                <p class="card-text">
+                    View logged sensor readings over time. Track trends in temperature, light, and more.
+                </p>
+                <a href="history" class="btn btn-sm btn-outline-secondary disabled">Coming Soon</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">⚙️ Controls Panel</h5>
+                <p class="card-text">
+                    (Coming soon) Toggle lights, fans, and heaters — simulated now, real GPIO control later.
+                </p>
+                <a href="control" class="btn btn-sm btn-outline-secondary disabled">Coming Soon</a>
+            </div>
+        </div>
+    </div>
+</div>
