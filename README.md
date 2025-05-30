@@ -14,32 +14,27 @@ The result is a dashboard that tracks temperature, humidity, soil moisture, and 
 
 - **Blazor Server (.NET 8)**
 - **Entity Framework Core** with SQLite
-- **ChartJs.Blazor / Blazorise** (for data visualization)
-- **Responsive Razor components**
-- Simulated IoT data generators
+- **Bootstrap 5 UI ** with responsive layout
+- **Custom sensor simulation service**
+- Future: **Charting** with ChartJS.Blazor or Blazorise
 
 ---
 
-## 📊 Core Features
+## 🌱 Features
 
-- 📍 Zone-based sensor tracking
-- 📈 Historical charts and data trends
-- 🧪 Simulated temperature, light, moisture readings
-- 🔘 UI controls for fans, heaters, lights
-- 🗃️ Database-driven backend (EF Core)
+- 📍 **Zone Management** -- Define garden zones and locations
+- 🧪 **Sensor Simulation** — Generate realistic temperature, humidity, light, and soil moisture data
+- 📊 **History Viewer** — Browse time-series data for each zone
+- 🖥️ **Admin Dashboard** — Clean landing page with contextual navigation
+- 🔧 **Fully database-driven** with async EF Core operations
+
 
 ---
 
-## 💡 Why This Project?
-
-This project bridges the gap between traditional web development and embedded/IoT-style thinking. It demonstrates:
-
-- Time-series data handling
-- Realistic data simulation
-- Full CRUD logic and database design
-- A compelling narrative and user-facing UI
-
-Whether or not it ever connects to real hardware, it shows an understanding of how modern control systems function — and it’s ready to expand.
+## ✨ Highlights
+- **Simulates real-world control logic** with realistic sensor variance
+- Built for **growth**: future plans include GPIO mockups, actuator toggling, and charting
+- Clean architecture with **separation** of concerns (Services, Pages, Data, Models)
 
 ---
 
@@ -51,12 +46,28 @@ _(Coming soon as the UI is built out.)_
 
 ## 🚀 Status
 
-✅ Project scaffolded  
-✅ EF Core models and DB setup  
-🔜 CRUD for zones  
-🔜 Simulated data service  
-🔜 Dashboard with charts  
-🔜 Control panel and history views
+## 🚀 Status
+
+| Feature                        | Status       |
+|-------------------------------|--------------|
+| Project scaffolded            | ✅ Complete   |
+| Zone CRUD (EF + Blazor)       | ✅ Complete   |
+| Sensor simulation service     | ✅ Working    |
+| Historical data view          | ✅ Live       |
+| Dashboard splash screen       | ✅ Styled     |
+| Control toggles (GPIO UI)     | 🔜 Next phase |
+| Data visualization (charts)   | 🔜 Planned    |
+
+
+---
+
+## 💡 Why I Built This
+GardenSense is equal parts web app, simulated control system, and proof of concept. It shows:
+
+- How a full-stack .NET app handles live data
+- What real-world monitoring might look like before hardware is attached
+
+It also reflects my interests — clean design, useful tools, and the intersection of software + physical environments.
 
 ---
 
