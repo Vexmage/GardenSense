@@ -118,3 +118,8 @@ a, .btn-link {
         background-color: var(--brand-green);
         color: white;
     }
+
+
+.navbar-brand img {
+    vertical-align: middle;
+}
