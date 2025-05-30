@@ -1,5 +1,96 @@
-﻿<h3>Control</h3>
+﻿@page "/control"
+@using GardenSense.Data
+@using GardenSense.Models
+@using Microsoft.EntityFrameworkCore
+@inject GardenContext Db
+
+<h3>Controls Panel</h3>
+
+<p>Toggle devices per garden zone. These simulate heaters, fans, and grow lights.</p>
+
+@if (zoneStatuses == null)
+{
+    <p><em>Loading zones...</em></p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Zone</th>
+                <th>Heater</th>
+                <th>Fan</th>
+                <th>Grow Lights</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var zs in zoneStatuses)
+            {
+                <tr>
+                    <td>@zs.Zone.Name</td>
+                    <td>
+                        <InputCheckbox @bind-Value="zs.HeaterOn" />
+                    </td>
+                    <td>
+                        <InputCheckbox @bind-Value="zs.FanOn" />
+                    </td>
+                    <td>
+                        <InputCheckbox @bind-Value="zs.GrowLightsOn" />
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-success" @onclick="@(() => SaveStatus(zs))">Save</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
 
 @code {
+    private List<ActuatorStatus>? zoneStatuses;
 
+    protected override async Task OnInitializedAsync()
+    {
+        zoneStatuses = await Db.Zones
+            .Select(z => new ActuatorStatus
+                {
+                    GardenZoneId = z.Id,
+                    Zone = z,
+                    Timestamp = DateTime.Now,
+                    HeaterOn = Db.ActuatorStatuses
+                                .Where(a => a.GardenZoneId == z.Id)
+                                .OrderByDescending(a => a.Timestamp)
+                                .Select(a => a.HeaterOn)
+                                .FirstOrDefault(),
+
+                    FanOn = Db.ActuatorStatuses
+                                .Where(a => a.GardenZoneId == z.Id)
+                                .OrderByDescending(a => a.Timestamp)
+                                .Select(a => a.FanOn)
+                                .FirstOrDefault(),
+
+                    GrowLightsOn = Db.ActuatorStatuses
+                                .Where(a => a.GardenZoneId == z.Id)
+                                .OrderByDescending(a => a.Timestamp)
+                                .Select(a => a.GrowLightsOn)
+                                .FirstOrDefault()
+                })
+            .ToListAsync();
+    }
+
+    private async Task SaveStatus(ActuatorStatus status)
+    {
+        var entry = new ActuatorStatus
+            {
+                GardenZoneId = status.GardenZoneId,
+                HeaterOn = status.HeaterOn,
+                FanOn = status.FanOn,
+                GrowLightsOn = status.GrowLightsOn,
+                Timestamp = DateTime.Now
+            };
+
+        Db.ActuatorStatuses.Add(entry);
+        await Db.SaveChangesAsync();
+    }
 }
