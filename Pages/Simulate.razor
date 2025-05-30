@@ -1,6 +1,10 @@
 ﻿@page "/simulate"
 @using GardenSense.Services
+@using GardenSense.Data
+@using GardenSense.Models
+@using Microsoft.EntityFrameworkCore
 @inject SimulationService SimService
+@inject GardenContext Db
 
 
 <h3>Simulate Sensor Readings</h3>
@@ -14,12 +18,50 @@
     <p class="mt-3 alert alert-success">@message</p>
 }
 
+@if (latestReadings?.Any() == true)
+{
+    <h5 class="mt-4">Latest Sensor Readings</h5>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Zone ID</th>
+                <th>Temp (°F)</th>
+                <th>Humidity (%)</th>
+                <th>Light (Lumens)</th>
+                <th>Soil Moisture (%)</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var reading in latestReadings)
+            {
+                <tr>
+                    <td>@reading.GardenZoneId</td>
+                    <td>@reading.Temperature</td>
+                    <td>@reading.Humidity</td>
+                    <td>@reading.LightLevel</td>
+                    <td>@reading.SoilMoisture</td>
+                    <td>@reading.Timestamp.ToString("g")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
 @code {
     private string? message;
+    private List<SensorReading> latestReadings = new();
+
 
     private async Task RunSimulation()
     {
         await SimService.GenerateSensorDataAsync();
         message = $"Sensor data generated at {DateTime.Now:T}";
+
+        // Fetch most recent reading per zone
+        latestReadings = await Db.SensorReadings
+            .GroupBy(r => r.GardenZoneId)
+            .Select(g => g.OrderByDescending(r => r.Timestamp).FirstOrDefault())
+            .ToListAsync();
     }
 }

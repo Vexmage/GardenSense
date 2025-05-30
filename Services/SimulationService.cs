@@ -34,5 +34,32 @@ namespace GardenSense.Services
 
             await _db.SaveChangesAsync();
         }
+
+        public async Task<List<SensorReading>> SimulateAsync()
+        {
+            var zones = _db.Zones.ToList();
+            var simulatedReadings = new List<SensorReading>();
+
+            foreach (var zone in zones)
+            {
+                var reading = new SensorReading
+                {
+                    GardenZoneId = zone.Id,
+                    Timestamp = DateTime.Now,
+                    Temperature = Math.Round(65 + _rand.NextDouble() * 15, 1),   // °F
+                    Humidity = Math.Round(30 + _rand.NextDouble() * 40, 1),     // %
+                    LightLevel = Math.Round(200 + _rand.NextDouble() * 600, 0), // Lumens
+                    SoilMoisture = Math.Round(20 + _rand.NextDouble() * 60, 1)  // %
+                };
+
+                simulatedReadings.Add(reading);
+                _db.SensorReadings.Add(reading);
+            }
+
+            await _db.SaveChangesAsync();
+            return simulatedReadings;
+        }
+
+
     }
 }
