@@ -56,8 +56,15 @@ a, .btn-link {
     border: 1px solid var(--brand-gray-mid);
     border-radius: 0.5rem;
     background-color: var(--brand-gray-light);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
+    .card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        border-color: var(--brand-green);
+        background-color: #f6fff7; /* soft garden-green tint */
+    }
 
 .content {
     padding-top: 1.1rem;
