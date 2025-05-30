@@ -46,12 +46,28 @@ _(Coming soon as the UI is built out.)_
 
 ## 🚀 Status
 
-✅ Project scaffolded  
-✅ EF Core models and DB setup  
-🔜 CRUD for zones  
-🔜 Simulated data service  
-🔜 Dashboard with charts  
-🔜 Control panel and history views
+## 🚀 Status
+
+| Feature                        | Status       |
+|-------------------------------|--------------|
+| Project scaffolded            | ✅ Complete   |
+| Zone CRUD (EF + Blazor)       | ✅ Complete   |
+| Sensor simulation service     | ✅ Working    |
+| Historical data view          | ✅ Live       |
+| Dashboard splash screen       | ✅ Styled     |
+| Control toggles (GPIO UI)     | 🔜 Next phase |
+| Data visualization (charts)   | 🔜 Planned    |
+
+
+---
+
+## 💡 Why I Built This
+GardenSense is equal parts web app, simulated control system, and proof of concept. It shows:
+
+- How a full-stack .NET app handles live data
+- What real-world monitoring might look like before hardware is attached
+
+It also reflects my interests — clean design, useful tools, and the intersection of software + physical environments.
 
 ---
 
