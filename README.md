@@ -14,32 +14,27 @@ The result is a dashboard that tracks temperature, humidity, soil moisture, and 
 
 - **Blazor Server (.NET 8)**
 - **Entity Framework Core** with SQLite
-- **ChartJs.Blazor / Blazorise** (for data visualization)
-- **Responsive Razor components**
-- Simulated IoT data generators
+- **Bootstrap 5 UI ** with responsive layout
+- **Custom sensor simulation service**
+- Future: **Charting** with ChartJS.Blazor or Blazorise
 
 ---
 
-## 📊 Core Features
+## 🌱 Features
 
-- 📍 Zone-based sensor tracking
-- 📈 Historical charts and data trends
-- 🧪 Simulated temperature, light, moisture readings
-- 🔘 UI controls for fans, heaters, lights
-- 🗃️ Database-driven backend (EF Core)
+- 📍 **Zone Management** -- Define garden zones and locations
+- 🧪 **Sensor Simulation** — Generate realistic temperature, humidity, light, and soil moisture data
+- 📊 **History Viewer** — Browse time-series data for each zone
+- 🖥️ **Admin Dashboard** — Clean landing page with contextual navigation
+- 🔧 **Fully database-driven** with async EF Core operations
+
 
 ---
 
-## 💡 Why This Project?
-
-This project bridges the gap between traditional web development and embedded/IoT-style thinking. It demonstrates:
-
-- Time-series data handling
-- Realistic data simulation
-- Full CRUD logic and database design
-- A compelling narrative and user-facing UI
-
-Whether or not it ever connects to real hardware, it shows an understanding of how modern control systems function — and it’s ready to expand.
+## ✨ Highlights
+- **Simulates real-world control logic** with realistic sensor variance
+- Built for **growth**: future plans include GPIO mockups, actuator toggling, and charting
+- Clean architecture with **separation** of concerns (Services, Pages, Data, Models)
 
 ---
 
