@@ -1,5 +1,94 @@
-﻿<h3>History</h3>
+﻿@page "/history"
+@using GardenSense.Data
+@using GardenSense.Models
+@using Microsoft.EntityFrameworkCore
+@inject GardenContext Db
+
+<h3>Sensor Reading History</h3>
+
+@if (zones == null)
+{
+    <p><em>Loading zones...</em></p>
+}
+else
+{
+    <div class="mb-3">
+        <label for="zoneSelect">Select Zone:</label>
+        <select class="form-select" id="zoneSelect" @onchange="OnZoneChanged">
+            @foreach (var z in zones)
+            {
+                <option value="@z.Id" selected="@(z.Id == selectedZoneId)">
+                    @z.Name (@z.Location)
+                </option>
+            }
+        </select>
+    </div>
+
+    @if (readings != null && readings.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Temp (°F)</th>
+                    <th>Humidity (%)</th>
+                    <th>Light (Lumens)</th>
+                    <th>Soil Moisture (%)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reading in readings)
+                {
+                    <tr>
+                        <td>@reading.Timestamp.ToString("g")</td>
+                        <td>@reading.Temperature</td>
+                        <td>@reading.Humidity</td>
+                        <td>@reading.LightLevel</td>
+                        <td>@reading.SoilMoisture</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (selectedZoneId != null)
+    {
+        <p class="text-muted">No readings found for this zone.</p>
+    }
+}
 
 @code {
+    private List<GardenZone> zones = new();
+    private int? selectedZoneId = null;
+    private List<SensorReading> readings = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        zones = await Db.Zones.OrderBy(z => z.Name).ToListAsync();
+
+        if (zones.Any())
+        {
+            selectedZoneId = zones.First().Id;
+            await LoadReadings();
+        }
+    }
+
+    private async Task OnZoneChanged(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out var newZoneId))
+        {
+            selectedZoneId = newZoneId;
+            await LoadReadings();
+        }
+    }
+
+    private async Task LoadReadings()
+    {
+        if (selectedZoneId == null) return;
+
+        readings = await Db.SensorReadings
+            .Where(r => r.GardenZoneId == selectedZoneId)
+            .OrderByDescending(r => r.Timestamp)
+            .Take(100)
+            .ToListAsync();
+    }
 }
